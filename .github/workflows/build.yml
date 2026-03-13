@@ -1,0 +1,83 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Latest tag: $LATEST_TAG"
+          VERSION=${LATEST_TAG#v}
+          IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+          PATCH=$((PATCH + 1))
+          NEW_TAG="v${MAJOR}.${MINOR}.${PATCH}"
+          echo "New tag: $NEW_TAG"
+          echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
+
+      - name: Create 
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git tag ${{ steps.get_tag.outputs.new_tag }}
+          git push origin ${{ steps.get_tag.outputs.new_tag }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+
+      - name: Build binaries
+        run: |
+          mkdir -p release
+          
+          # Linux builds
+          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o release/systemctl-linux-amd64 ./cmd/systemctl
+          GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o release/systemctl-linux-arm64 ./cmd/systemctl
+          GOOS=linux GOARCH=arm GOARM=7 go build -ldflags="-s -w" -o release/systemctl-linux-armv7 ./cmd/systemctl
+          GOOS=linux GOARCH=386 go build -ldflags="-s -w" -o release/systemctl-linux-386 ./cmd/systemctl
+          
+          # Windows builds
+          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o release/systemctl-windows-amd64.exe ./cmd/systemctl
+          GOOS=windows GOARCH=arm64 go build -ldflags="-s -w" -o release/systemctl-windows-arm64.exe ./cmd/systemctl
+          GOOS=windows GOARCH=386 go build -ldflags="-s -w" -o release/systemctl-windows-386.exe ./cmd/systemctl
+          
+          # macOS builds
+          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o release/systemctl-darwin-amd64 ./cmd/systemctl
+          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o release/systemctl-darwin-arm64 ./cmd/systemctl
+
+      - name: Create checksums
+        run: |
+          cd release
+          sha256sum * > SHA256SUMS
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.get_tag.outputs.new_tag }}
+          name: Release ${{ steps.get_tag.outputs.new_tag }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: release/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
