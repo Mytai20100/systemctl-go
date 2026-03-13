@@ -18,14 +18,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gdraheim/systemctl-go/internal/conf"
-	"github.com/gdraheim/systemctl-go/internal/journal"
-	"github.com/gdraheim/systemctl-go/internal/logger"
-	"github.com/gdraheim/systemctl-go/internal/paths"
-	"github.com/gdraheim/systemctl-go/internal/process"
-	"github.com/gdraheim/systemctl-go/internal/types"
-	"github.com/gdraheim/systemctl-go/internal/units"
-	"github.com/gdraheim/systemctl-go/internal/utils"
+	"systemctl-go/internal/conf"
+	"systemctl-go/internal/journal"
+	"systemctl-go/internal/logger"
+	"systemctl-go/internal/paths"
+	"systemctl-go/internal/process"
+	"systemctl-go/internal/types"
+	"systemctl-go/internal/units"
+	"systemctl-go/internal/utils"
 )
 
 var logg = logger.GetLogger("systemctl")

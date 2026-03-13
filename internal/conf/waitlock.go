@@ -9,8 +9,8 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	"github.com/gdraheim/systemctl-go/internal/paths"
-	"github.com/gdraheim/systemctl-go/internal/types"
+	"systemctl-go/internal/paths"
+	"systemctl-go/internal/types"
 )
 
 // Waitlock implements a file-lock-based mutex so that parallel systemctl

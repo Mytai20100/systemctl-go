@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/gdraheim/systemctl-go/internal/logger"
-	"github.com/gdraheim/systemctl-go/internal/systemctl"
-	"github.com/gdraheim/systemctl-go/internal/types"
+	"systemctl-go/internal/logger"
+	"systemctl-go/internal/systemctl"
+	"systemctl-go/internal/types"
 )
 
 var logg = logger.GetLogger("commands")

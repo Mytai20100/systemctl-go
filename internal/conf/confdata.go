@@ -10,9 +10,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/gdraheim/systemctl-go/internal/logger"
-	"github.com/gdraheim/systemctl-go/internal/types"
-	"github.com/gdraheim/systemctl-go/internal/utils"
+	"systemctl-go/internal/logger"
+	"systemctl-go/internal/types"
+	"systemctl-go/internal/utils"
 )
 
 var logg = logger.GetLogger("conf")

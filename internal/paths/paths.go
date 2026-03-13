@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/gdraheim/systemctl-go/internal/types"
+	"systemctl-go/internal/types"
 )
 
 // ── login / uid helpers ────────────────────────────────────────────────────

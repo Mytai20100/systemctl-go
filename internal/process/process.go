@@ -11,7 +11,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/gdraheim/systemctl-go/internal/logger"
+	"systemctl-go/internal/logger"
 )
 
 var logg = logger.GetLogger("process")

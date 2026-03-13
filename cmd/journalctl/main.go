@@ -6,9 +6,9 @@ import (
 	"flag"
 	"os"
 
-	"github.com/gdraheim/systemctl-go/internal/commands"
-	"github.com/gdraheim/systemctl-go/internal/systemctl"
-	"github.com/gdraheim/systemctl-go/internal/types"
+	"systemctl-go/internal/commands"
+	"systemctl-go/internal/systemctl"
+	"systemctl-go/internal/types"
 )
 
 func main() {

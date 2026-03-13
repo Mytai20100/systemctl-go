@@ -11,12 +11,12 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gdraheim/systemctl-go/internal/conf"
-	"github.com/gdraheim/systemctl-go/internal/listen"
-	"github.com/gdraheim/systemctl-go/internal/paths"
-	"github.com/gdraheim/systemctl-go/internal/process"
-	"github.com/gdraheim/systemctl-go/internal/types"
-	"github.com/gdraheim/systemctl-go/internal/utils"
+	"systemctl-go/internal/conf"
+	"systemctl-go/internal/listen"
+	"systemctl-go/internal/paths"
+	"systemctl-go/internal/process"
+	"systemctl-go/internal/types"
+	"systemctl-go/internal/utils"
 )
 
 // ── service directory helpers ─────────────────────────────────────────────

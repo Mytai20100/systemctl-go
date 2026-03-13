@@ -1,4 +1,4 @@
-module github.com/gdraheim/systemctl-go
+module systemctl-go
 
 go 1.25
 

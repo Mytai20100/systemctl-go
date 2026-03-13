@@ -12,11 +12,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gdraheim/systemctl-go/internal/conf"
-	"github.com/gdraheim/systemctl-go/internal/logger"
-	"github.com/gdraheim/systemctl-go/internal/paths"
-	"github.com/gdraheim/systemctl-go/internal/types"
-	"github.com/gdraheim/systemctl-go/internal/utils"
+	"systemctl-go/internal/conf"
+	"systemctl-go/internal/logger"
+	"systemctl-go/internal/paths"
+	"systemctl-go/internal/types"
+	"systemctl-go/internal/utils"
 )
 
 var logg = logger.GetLogger("units")
