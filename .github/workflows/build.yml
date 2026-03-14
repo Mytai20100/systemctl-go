@@ -1,18 +1,15 @@
 name: Build
-
 on:
   push:
     branches:
       - main
       - master
-
 permissions:
   contents: write
-
 jobs:
   release:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -54,18 +51,20 @@ jobs:
       - name: Build binaries
         run: |
           mkdir -p release
-          
-          # Linux builds only
+
           GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o release/systemctl-amd64 ./cmd/systemctl
           GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o release/systemctl-arm64 ./cmd/systemctl
           GOOS=linux GOARCH=arm GOARM=7 go build -ldflags="-s -w" -o release/systemctl-armv7 ./cmd/systemctl
           GOOS=linux GOARCH=386 go build -ldflags="-s -w" -o release/systemctl-386 ./cmd/systemctl
 
+          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o release/journalctl-amd64 ./cmd/journalctl
+          GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o release/journalctl-arm64 ./cmd/journalctl
+          GOOS=linux GOARCH=arm GOARM=7 go build -ldflags="-s -w" -o release/journalctl-armv7 ./cmd/journalctl
+          GOOS=linux GOARCH=386 go build -ldflags="-s -w" -o release/journalctl-386 ./cmd/journalctl
+
       - name: Create checksums
         run: |
           cd release
-          sha256sum * > SHA256SUMS
-
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
